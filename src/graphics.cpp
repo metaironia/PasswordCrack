@@ -8,19 +8,13 @@ GraphicsFuncStatus CrackProgramRun (void) {
 
     txTextCursor (false);
 
-    HDC background_image = txLoadImage (BackgroundImagePathGen());
+    HDC background_image = BackgroundImageSet (BackgroundImagePathGen());
 
-    if (!background_image) {
-
-        txMessageBox ("Верните картинки по-хорошему");
+    if (!background_image)
         return GRAPHICS_FUNC_STATUS_FAIL;
-    }
 
-    if (!txPlaySound ("CrackSounds\\main_menu.wav", SND_LOOP)) {
-
-        txMessageBox ("Срочно верните звуки или вам станет плохо");
+    if (BackgroundMusicSet ("CrackSounds\\main_menu") == GRAPHICS_FUNC_STATUS_FAIL)
         return GRAPHICS_FUNC_STATUS_FAIL;
-    }
 
     Win32::TransparentBlt (txDC(),           0, 0, CRACK_WINDOW_SIZE_X,             CRACK_WINDOW_SIZE_Y,
                            background_image, 0, 0, txGetExtentX (background_image), txGetExtentY (background_image),
@@ -36,13 +30,12 @@ GraphicsFuncStatus CrackProgramRun (void) {
 
         if (PressedButtonCheck (CRACK_WINDOW_SIZE_X * 2 / 3, CRACK_WINDOW_SIZE_Y * 2 / 3)) {
 
-            CrackTry();
+            txDeleteDC (background_image);
 
             break;
         }
     }
 
-    txDeleteDC (background_image);
 
     return GRAPHICS_FUNC_STATUS_OK;
 }
@@ -100,3 +93,32 @@ GraphicsFuncStatus CrackButtonDraw (const double x_topleft, const double y_tople
 
     return GRAPHICS_FUNC_STATUS_OK;
 }
+
+HDC BackgroundImageSet (const char *image_path) {
+
+    assert (image_path);
+
+    HDC background_image = txLoadImage (image_path);
+
+    if (!background_image) {
+
+        txMessageBox ("Верните картинки по-хорошему");
+        return NULL;
+    }
+
+    return background_image;
+}
+
+GraphicsFuncStatus BackgroundMusicSet (const char *music_path) {
+
+    assert (music_path);
+
+    if (!txPlaySound (music_path, SND_LOOP)) {
+
+        txMessageBox ("Срочно верните звуки или вам станет плохо");
+        return GRAPHICS_FUNC_STATUS_FAIL;
+    }
+
+    return GRAPHICS_FUNC_STATUS_OK;
+}
+

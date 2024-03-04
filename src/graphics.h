@@ -30,4 +30,8 @@ bool PressedButtonCheck (const double x_topleft, const double y_topleft);
 
 bool MouseInsideButtonCheck (const double x_topleft, const double y_topleft);
 
+HDC BackgroundImageSet (const char *image_path);
+
+GraphicsFuncStatus BackgroundMusicSet (const char *music_path);
+
 #endif
