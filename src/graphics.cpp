@@ -8,12 +8,12 @@ GraphicsFuncStatus CrackProgramRun (void) {
 
     txTextCursor (false);
 
+    if (BackgroundMusicSet ("CrackSounds\\main_menu") == GRAPHICS_FUNC_STATUS_FAIL)
+        return GRAPHICS_FUNC_STATUS_FAIL;
+
     HDC background_image = BackgroundImageSet (BackgroundImagePathGen());
 
     if (!background_image)
-        return GRAPHICS_FUNC_STATUS_FAIL;
-
-    if (BackgroundMusicSet ("CrackSounds\\main_menu") == GRAPHICS_FUNC_STATUS_FAIL)
         return GRAPHICS_FUNC_STATUS_FAIL;
 
     Win32::TransparentBlt (txDC(),           0, 0, CRACK_WINDOW_SIZE_X,             CRACK_WINDOW_SIZE_Y,
@@ -32,10 +32,11 @@ GraphicsFuncStatus CrackProgramRun (void) {
 
             txDeleteDC (background_image);
 
+            CrackTry();
+
             break;
         }
     }
-
 
     return GRAPHICS_FUNC_STATUS_OK;
 }
@@ -122,3 +123,38 @@ GraphicsFuncStatus BackgroundMusicSet (const char *music_path) {
     return GRAPHICS_FUNC_STATUS_OK;
 }
 
+GraphicsFuncStatus CrackTry (void) {
+
+    bool crack_state = (bool) (rand() % 2);
+
+    const char *image_path = NULL;
+    const char *music_path = NULL;
+
+    if (crack_state) {
+
+        image_path = "CrackImages\\hack_success.bmp";
+        music_path = "CrackSounds\\hack_success.wav";
+    }
+
+    else {
+
+        image_path = "CrackImages\\hack_fail.bmp";
+        music_path = "CrackSounds\\hack_fail.wav";
+    }
+
+    if (BackgroundMusicSet (music_path) == GRAPHICS_FUNC_STATUS_FAIL)
+        return GRAPHICS_FUNC_STATUS_FAIL;
+
+    HDC background_image = BackgroundImageSet (image_path);
+
+    if (!background_image)
+        return GRAPHICS_FUNC_STATUS_FAIL;
+
+    Win32::StretchBlt (txDC(),           0, 0, CRACK_WINDOW_SIZE_X,             CRACK_WINDOW_SIZE_Y,
+                       background_image, 0, 0, txGetExtentX (background_image), txGetExtentY (background_image),
+                       SRCCOPY);
+
+    txDeleteDC (background_image);
+
+    return GRAPHICS_FUNC_STATUS_OK;
+}

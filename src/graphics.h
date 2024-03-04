@@ -34,4 +34,6 @@ HDC BackgroundImageSet (const char *image_path);
 
 GraphicsFuncStatus BackgroundMusicSet (const char *music_path);
 
+GraphicsFuncStatus CrackTry (void);
+
 #endif
