@@ -1,3 +1,5 @@
+#include "../lib/TXLib.h"
+
 #include <stdlib.h>
 #include <time.h>
 

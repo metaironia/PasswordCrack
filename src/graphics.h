@@ -1,7 +1,6 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-
 enum GraphicsFuncStatus {
 
     GRAPHICS_FUNC_STATUS_OK,

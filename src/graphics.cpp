@@ -1,6 +1,7 @@
 #include "../lib/TXLib.h"
 
 #include "graphics.h"
+#include "crack.h"
 
 GraphicsFuncStatus CrackProgramRun (void) {
 
@@ -125,12 +126,16 @@ GraphicsFuncStatus BackgroundMusicSet (const char *music_path) {
 
 GraphicsFuncStatus CrackTry (void) {
 
-    bool crack_state = (bool) (rand() % 2);
+    bool is_crack_success = (bool) (rand() % 2);
 
     const char *image_path = NULL;
     const char *music_path = NULL;
 
-    if (crack_state) {
+    if (is_crack_success)
+        if (CrackReplaceBytes() == CRACK_FUNC_STATUS_FAIL)
+            is_crack_success = false;
+
+    if (is_crack_success) {
 
         image_path = "CrackImages\\hack_success.bmp";
         music_path = "CrackSounds\\hack_success.wav";
