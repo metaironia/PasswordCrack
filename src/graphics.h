@@ -8,6 +8,8 @@ enum GraphicsFuncStatus {
     GRAPHICS_FUNC_STATUS_FAIL
 };
 
+const int LEFT_BUTTON = 1;
+
 const int PATH_TO_IMAGE_LENGTH     = 32;
 const int BACKGROUND_IMAGES_NUMBER = 3;
 
@@ -24,5 +26,8 @@ const char *BackgroundImagePathGen (void);
 
 GraphicsFuncStatus CrackButtonDraw (const double x_topleft, const double y_topleft, const char *button_text);
 
+bool PressedButtonCheck (const double x_topleft, const double y_topleft);
+
+bool MouseInsideButtonCheck (const double x_topleft, const double y_topleft);
 
 #endif
