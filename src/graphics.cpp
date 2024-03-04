@@ -16,12 +16,20 @@ GraphicsFuncStatus CrackProgramRun (void) {
         return GRAPHICS_FUNC_STATUS_FAIL;
     }
 
+    if (!txPlaySound ("CrackSounds\\main_menu.wav", SND_LOOP)) {
+
+        txMessageBox ("Срочно верните звуки или вам станет плохо");
+        return GRAPHICS_FUNC_STATUS_FAIL;
+    }
+
     Win32::TransparentBlt (txDC(),           0, 0, CRACK_WINDOW_SIZE_X,             CRACK_WINDOW_SIZE_Y,
                            background_image, 0, 0, txGetExtentX (background_image), txGetExtentY (background_image),
                            TX_NULL);
 
     CrackButtonDraw (CRACK_WINDOW_SIZE_X * 2 / 3, CRACK_WINDOW_SIZE_Y * 1 / 3, "ПОЗВОНИТЬ В МВД");
     CrackButtonDraw (CRACK_WINDOW_SIZE_X * 2 / 3, CRACK_WINDOW_SIZE_Y * 2 / 3, "CRACK");
+
+
 
     txDeleteDC (background_image);
 
