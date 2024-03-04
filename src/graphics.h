@@ -10,7 +10,7 @@ enum GraphicsFuncStatus {
     GRAPHICS_FUNC_STATUS_FAIL
 };
 
-GraphicsStatus CrackProgramRun (void);
+GraphicsFuncStatus CrackProgramRun (void);
 
 
 #endif
